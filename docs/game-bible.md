@@ -3,7 +3,7 @@
 Local Pages
 
 - Current stage: Chapter 1, Vision & Scope.
-- Next decision: Confirm the first operator, supported host environment, and first-release access boundary.
+- Next decisions: Define the agent handoff, GitLab host coverage, and the first publishing workflow.
 
 ## Vision & Scope
 
@@ -21,17 +21,23 @@ Sign in to the admin, pick a Git provider, repository, branch, and source, then 
 - [Codeberg Pages](https://docs.codeberg.org/codeberg-pages/) publishes static sites using Git and supports custom domains. Compare its branch and URL setup when defining how Local Pages maps sources to addresses.
 - [Coolify](https://coolify.io/docs/applications/) deploys applications from Git. Compare its setup with the narrower workflow for publishing a folder of already-built files.
 
-### First playable milestone and release scope
+### Who we’re building for
 
-A proposed first check is to add one Page from a private Gitea repo through the admin, open it from the directory, then push a content change and see it at the same URL. Confirm the audience, host environment, access boundary, and whether GitHub is part of that first milestone before treating this as release scope.
+Joe is the first operator. The first release should make his publishing workflow simple and give other self-hosters a setup they can repeat. Linux with Docker Compose is the supported installation target. Readers sign in to open the directory and published Pages.
+
+### First milestone and release scope
+
+Start by proving the Gitea workflow on the first deployment. The proposed check is to add a Page from a private repository in the admin, open it from the directory, then push a change and see it at the same URL. The first shareable release includes Gitea, GitHub, and GitLab. Verify publishing from all three before calling that release ready.
+
+Ship a plugin, an MCP integration, and repo-level agent instructions. An operator should be able to point an agent at this repository and have it get the service running and hand over the web admin for setup. The instructions should also explain how to manage the service after installation. The first plugin host and the management actions agents can perform are open.
 
 ### Open decisions
 
-- Who should be able to install and operate the first release?
-- Which host environment will the first release document and verify?
-- Who can view the directory and published Pages?
-- Which sources, providers, and addresses belong in the first release?
-- What proves that the first release is ready for another operator to try?
+- Which agent host should the first plugin target?
+- Where should agents hand off to the operator during setup and ongoing management?
+- Does first-release GitLab support cover GitLab.com, self-managed GitLab, or both?
+- Which source formats and address choices does the first publishing check need to prove?
+- What proves the first shareable release is ready for another operator to try?
 
 ## Design Document
 - Core workflow and intended experience:
