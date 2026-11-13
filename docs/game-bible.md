@@ -3,7 +3,7 @@
 Local Pages
 
 - Current stage: Chapter 2, Design Document.
-- Next decisions: How repositories provide publishable files and which Pages a reader account can open.
+- Next check: Review the Chapter 2 publishing workflow before moving into Engine & Assets.
 
 ## Vision & Scope
 
@@ -66,7 +66,11 @@ The operator opens the admin URL from the installation handoff, signs in, and ch
 2. Select a branch and a publish folder. Choose the entry file inside that folder. Suggest `index.html` for an HTML site or `README.md` for Markdown. The operator can choose a nested entry, such as `docs/reader/index.html`, while keeping the files it links to inside the publish folder.
 3. Review the suggested subdomain and publish. The Bible reader and playable preview can each have a Page sourced from the same repository. Open each address to check the result.
 
-A reader signs in with an individual account. They can find a Page in the directory or open its address directly. The operator creates reader accounts and removes access from the admin.
+A reader signs in with an individual account. Each active account can open the directory and every published Page, including through direct links. The operator creates reader accounts and removes access from the admin.
+
+### Preparing files for a Page
+
+Each project commits its finished files to a branch or folder. Local Pages serves those files. For the Island Post pilot, prepare a publish folder for the Bible with its shared guide files, linked assets, and evidence. Prepare another folder for the finished browser build. Set up each folder as a separate Page.
 
 ### Screens
 
@@ -84,11 +88,13 @@ A reader signs in with an individual account. They can find a Page in the direct
 | An update fails after the Page has gone live | The previous version stays available. The admin shows what failed and lets the operator retry. |
 | The operator disables a Page | The directory stops listing it and the site address stops serving its content. |
 | A signed-out reader opens the directory or a Page directly | The reader must sign in before viewing the content. |
+| The operator removes a reader account | The reader loses access to the directory and all published Pages, including in an existing session. |
 
-### Open design decisions
+### Checks for the Island Post pilot
 
-- Decide who assembles the publish folder when a site needs generated files or a Git submodule. Island Post uses a pinned shared guide for reader scripts and styles, while its browser preview comes from a build. Verify that the reader opens at the Page address and its linked files load.
-- Decide whether a reader account opens all published Pages or only Pages the operator selects. Verify access through both the directory and direct links, including after account access is removed.
+- Add both Pages from the admin and open them from the directory. Check that the Bible entry opens and that its styles, scripts, and linked files load. Play the browser preview from its own address.
+- Push updated files for both Pages and check that the same addresses serve the new versions. Try **Publish now**, then try an update with a missing entry file and check that the previous version stays available and the admin shows the failure.
+- Create a reader account, sign in, and open both Pages. Remove the account and check that the directory and direct Page links require access again, including in the same browser session.
 
 ## Engine and Assets
 - Engine and launch instructions:

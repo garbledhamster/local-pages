@@ -30,4 +30,4 @@ The HTML or Markdown file readers open when they visit the Page address.
 
 **Reader account**
 
-An individual sign-in that grants access to published Pages.
+An individual sign-in that grants access to the directory and all published Pages while the account is active.
