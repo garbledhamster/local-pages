@@ -1,0 +1,13 @@
+services:
+  app:
+    build: .
+    environment:
+      LOCAL_PAGES_HOST: "${LOCAL_PAGES_HOST:-pages.localhost}"
+      LOCAL_PAGES_DATABASE: /data/local-pages.sqlite3
+      LOCAL_PAGES_SECRET_KEY: "${LOCAL_PAGES_SECRET_KEY:?Set LOCAL_PAGES_SECRET_KEY in .env}"
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - pages-data:/data
+volumes:
+  pages-data:

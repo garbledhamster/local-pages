@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<header>
+  <h1>Local Pages</h1>
+  <form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button>Sign out</button>
+  </form>
+</header>
+<ul aria-label="Published Pages">
+  <li><a href="{{ page_url }}">Welcome <span aria-hidden="true">↗</span></a></li>
+</ul>
+{% endblock %}

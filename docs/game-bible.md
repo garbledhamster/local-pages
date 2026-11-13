@@ -3,7 +3,7 @@
 Local Pages
 
 - Current stage: Chapter 3, Engine & Assets.
-- Next decisions: Confirm the application stack and HTTPS setup for the Island Post pilot.
+- Next check: Run the Compose example from a clean Linux checkout, then prove publishing through the admin.
 
 ## Vision & Scope
 
@@ -100,13 +100,13 @@ Each project commits its finished files to a branch or folder. Local Pages serve
 
 ## Engine & Assets
 
-### Application stack under review
+### Application stack
 
-The proposed stack is Django 5.2 LTS, SQLite, server-rendered HTML, and Docker Compose. Django supplies user accounts, sessions, and permissions. Local Pages would use its own directory and publishing screens. Keep the database and published snapshots on persistent storage. One application would handle publishing and account access for the first release. See [Django authentication](https://docs.djangoproject.com/en/5.2/topics/auth/) and [Django's SQLite notes](https://docs.djangoproject.com/en/5.2/ref/databases/#sqlite-notes).
+Use Django 5.2 LTS, SQLite, server-rendered HTML, and Docker Compose. Django supplies user accounts, sessions, and permissions. Local Pages uses its own directory and publishing screens. Keep the database and published snapshots on persistent storage. One application handles publishing and account access for the first release. See [Django authentication](https://docs.djangoproject.com/en/5.2/topics/auth/) and [Django's SQLite notes](https://docs.djangoproject.com/en/5.2/ref/databases/#sqlite-notes).
 
 ### HTTPS on the pilot host
 
-The directory hostname and wildcard Page hostnames need HTTPS. The proposed pilot setup is Caddy with a browser-trusted certificate issued through DNS validation. The network's DNS resolver points both hostnames to the private server. Other operators can bring an HTTPS reverse proxy they already run. See [Caddy's DNS challenge documentation](https://caddyserver.com/docs/automatic-https#dns-challenge).
+The directory hostname and wildcard Page hostnames need HTTPS. Use Caddy with Cloudflare DNS validation to issue a browser-trusted certificate for the pilot. The network's DNS resolver points both hostnames to the private server. Other operators can bring an HTTPS reverse proxy they already run. See [Caddy's DNS challenge documentation](https://caddyserver.com/docs/automatic-https#dns-challenge).
 
 ### What the first running example needs
 
@@ -116,7 +116,9 @@ The directory hostname and wildcard Page hostnames need HTTPS. The proposed pilo
 
 ### Clean checkout check
 
-Document how to launch the first running example with Docker Compose once the stack is chosen. From a clean checkout, open the admin, sign in, publish a small HTML Page, and open it from the directory. Use that check to verify that the service, accounts, templates, and HTTPS work together before trying the full Island Post pilot.
+The [README](../README.md#try-the-first-runnable-example) shows how to launch the sample with Docker Compose. It includes a signed-in directory and a checked-in HTML Page on its own hostname. The sample signs in on each hostname separately.
+
+On November 13, 2026, the Django test verified anonymous redirects, protected content, and loss of access after deactivating an account. Chrome opened the directory and sample at 1280 and 390 pixels. The Compose configuration parsed on Blackbox. Running the container from a clean Linux checkout, configuring pilot HTTPS, and publishing an HTML Page from the admin remain to be verified.
 
 ## Development Sandbox
 - Dedicated development scene to build before player-scene assembly:
