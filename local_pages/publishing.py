@@ -87,6 +87,8 @@ def snapshot(page, username, token):
         git(["fetch", "--depth=1", "--no-tags", "--", page.repository, ref], cwd=repo,
             repository=page.repository, username=username, token=token)
         revision = git(["rev-parse", "FETCH_HEAD"], cwd=repo)
+        if revision == page.revision:
+            return
         tree = "FETCH_HEAD" if page.folder == "." else f"FETCH_HEAD:{page.folder}"
         archive = work / "site.tar"
         with archive.open("wb") as output:

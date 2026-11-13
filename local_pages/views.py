@@ -54,7 +54,7 @@ def home(request, path=""):
     if not path and "/" in page.entry:
         query = request.META.get("QUERY_STRING", "")
         return private(redirect("/" + quote(page.entry) + ("?" + query if query else "")))
-    return serve_file(request, root, path or page.entry, render_markdown=not path)
+    return serve_file(request, root, path or page.entry, render_markdown=not path or path == page.entry)
 
 
 def serve_file(request, root, path, *, render_markdown=False):
@@ -82,7 +82,6 @@ def serve_file(request, root, path, *, render_markdown=False):
     except FileNotFoundError as exc:
         raise Http404 from exc
     response = FileResponse(file, content_type=content_type)
-    response["Content-Security-Policy"] = "worker-src blob:"
     response["X-Content-Type-Options"] = "nosniff"
     return private(response)
 
@@ -164,6 +163,8 @@ def refresh_page(request, slug):
         return admin_list(request, "The saved Git credential cannot be read. Check the installation secret.")
     except PublishError as exc:
         return admin_list(request, str(exc))
+    if page.snapshot == previous:
+        return redirect("admin_home")
     if Page.objects.filter(pk=page.pk, snapshot=previous).update(snapshot=page.snapshot, revision=page.revision):
         old_snapshot = previous
     else:

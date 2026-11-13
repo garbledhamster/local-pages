@@ -2,8 +2,8 @@
 
 Local Pages
 
-- Current stage: Chapter 3, Engine & Assets.
-- Next check: Run the Compose example from a clean Linux checkout, then prove publishing through the admin.
+- Current stage: Chapter 4, Development Sandbox.
+- Next check: Verify automatic refresh, reader management, and a prebuilt browser Page before the release pilot.
 
 ## Vision & Scope
 
@@ -121,14 +121,18 @@ The [README](../README.md#try-the-first-runnable-example) shows how to launch th
 On November 13, 2026, the Django test verified anonymous redirects, protected content, and loss of access after deactivating an account. Chrome opened the directory and sample at 1280 and 390 pixels. The Compose configuration parsed on Blackbox. Running the container from a clean Linux checkout, configuring pilot HTTPS, and publishing an HTML Page from the admin remain to be verified.
 
 ## Development Sandbox
-- Dedicated development scene to build before player-scene assembly:
-- Release mechanics, assets, controls, objects, and outcomes reachable from that scene:
-- Development entry point or test-build shortcut:
-- NPC roster picker and dialogue branches to exercise, including the states that change each conversation:
-- Playable cases for every release mechanic and the other applicable checks from the Development Sandbox chapter:
-- For each case, record the named starting state, the object or control to use in the scene, what the player should see, and how to reset:
-- Record build, platform, observed result, and evidence:
-- Open failures and next checks:
+
+### Publish the Island Post Bible
+
+On November 13, 2026, the pilot ran on a Linux host with Gunicorn bound to loopback and an SSH tunnel. In **Manage Pages**, the operator checked branches in a private Gitea repository, chose the branch containing prepared Bible files, and published the nested HTML reader. **Publish now** accessed the same repository with the saved credential.
+
+Chrome opened the published Bible from the directory, rendered all eleven chapter cards, opened a chapter, and fetched the linked evidence image. A fresh signed-out browser received a sign-in redirect when it requested the source Markdown directly. The Django test also verified that a new revision with a missing entry file left the last working snapshot available.
+
+### Remaining pilot checks
+
+- Run the production Compose install, configure HTTPS and internal DNS, then verify the directory and Page from another device.
+- Verify periodic refresh and publish an updated prebuilt browser Page.
+- Verify managing reader accounts through the admin and publish test Pages from the remaining Git providers.
 
 ## Scene Scripts and Playtests
 - For each scene: entry, player objective, actions, dialogue, outcomes, and transitions:
