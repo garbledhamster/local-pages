@@ -3,7 +3,6 @@ import mimetypes
 import shutil
 from urllib.parse import quote
 
-from cryptography.fernet import InvalidToken
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
@@ -15,7 +14,7 @@ from markdown_it import MarkdownIt
 
 from local_pages.forms import PageForm
 from local_pages.models import Page
-from local_pages.publishing import PublishError, branches, credential_box, snapshot
+from local_pages.publishing import PublishError, branches, credential_box, refresh, snapshot
 
 
 def hostname(request):
@@ -155,19 +154,8 @@ def add_page(request):
 def refresh_page(request, slug):
     check_operator(request)
     page = get_object_or_404(Page, slug=slug)
-    previous = page.snapshot
     try:
-        username, token = json.loads(credential_box().decrypt(page.credential.encode())) if page.credential else ("", "")
-        snapshot(page, username, token)
-    except InvalidToken:
-        return admin_list(request, "The saved Git credential cannot be read. Check the installation secret.")
+        refresh(page)
     except PublishError as exc:
         return admin_list(request, str(exc))
-    if page.snapshot == previous:
-        return redirect("admin_home")
-    if Page.objects.filter(pk=page.pk, snapshot=previous).update(snapshot=page.snapshot, revision=page.revision):
-        old_snapshot = previous
-    else:
-        old_snapshot = page.snapshot
-    shutil.rmtree(settings.PUBLISH_ROOT / str(old_snapshot), ignore_errors=True)
     return redirect("admin_home")

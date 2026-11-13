@@ -1,5 +1,6 @@
 import base64
 import hashlib
+import json
 import os
 import shutil
 import subprocess
@@ -9,7 +10,7 @@ from tempfile import TemporaryDirectory
 from urllib.parse import urlsplit
 from uuid import uuid4
 
-from cryptography.fernet import Fernet
+from cryptography.fernet import Fernet, InvalidToken
 from django.conf import settings
 
 
@@ -106,3 +107,24 @@ def snapshot(page, username, token):
         shutil.move(site, root / str(snapshot_id))
         page.snapshot = snapshot_id
         page.revision = revision
+
+
+def refresh(page):
+    previous = page.snapshot
+    username, token = "", ""
+    if page.credential:
+        try:
+            username, token = json.loads(credential_box().decrypt(page.credential.encode()))
+        except InvalidToken as exc:
+            raise PublishError("The saved Git credential cannot be read. Check the installation secret.") from exc
+
+    snapshot(page, username, token)
+    if page.snapshot == previous:
+        return False
+
+    updated = type(page).objects.filter(pk=page.pk, snapshot=previous).update(
+        snapshot=page.snapshot, revision=page.revision,
+    )
+    old_snapshot = previous if updated else page.snapshot
+    shutil.rmtree(settings.PUBLISH_ROOT / str(old_snapshot), ignore_errors=True)
+    return bool(updated)

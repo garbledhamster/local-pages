@@ -92,12 +92,26 @@ class AdminPublishingTest(TestCase):
                 self.assertContains(raw, "# Raw notes")
                 self.assertEqual(self.client.get("/private.txt", HTTP_HOST=host).status_code, 404)
 
+                from io import StringIO
+
+                from django.core.management import call_command
+
+                entry.write_text("<h1>Updated by the scheduled command</h1>")
+                git("add", "-u")
+                git("commit", "-m", "Update entry")
+                output = StringIO()
+                call_command("refresh_pages", stdout=output)
+                self.assertIn("test-bible: published", output.getvalue())
+                self.assertContains(self.client.get("/reader/index.html", HTTP_HOST=host),
+                                    "Updated by the scheduled command")
+
                 entry.unlink()
                 git("add", "-u")
                 git("commit", "-m", "Remove entry")
                 response = self.client.post("/admin/test-bible/refresh/", HTTP_HOST=settings.BASE_HOST)
                 self.assertContains(response, "Entry file")
-                self.assertContains(self.client.get("/reader/index.html", HTTP_HOST=host), "Published from Git")
+                self.assertContains(self.client.get("/reader/index.html", HTTP_HOST=host),
+                                    "Updated by the scheduled command")
 
                 operator.is_staff = False
                 operator.save(update_fields=["is_staff"])

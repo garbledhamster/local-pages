@@ -20,6 +20,8 @@ Open [the directory](http://pages.localhost:8000/) and sign in with the account 
 
 To publish a Page, open **Manage Pages → Add Page**. Paste the Git clone URL and enter a Git username and read-only token for a private repository. Check the available branches, then choose the branch, publish folder, and entry file. Enter `.` for the branch root. Use `index.html` or a Markdown file such as `README.md` as the entry. Use **Publish now** to refresh a published Page.
 
+Run `docker compose exec -T app python manage.py refresh_pages` to check all published Pages. For automatic refresh, run that command every five minutes using the host scheduler. Run it from the directory containing `compose.yaml` and `.env`.
+
 Keep `LOCAL_PAGES_SECRET_KEY` with your database backup. Local Pages uses it to encrypt saved Git credentials. Use HTTPS for repository URLs. To allow a trusted internal Git server over HTTP, set `LOCAL_PAGES_INSECURE_GIT_HOSTS` to its hostname or IP address. Use `LOCAL_PAGES_HTTPS=1` behind a trusted HTTPS reverse proxy that sets `X-Forwarded-Proto` and keeps the app port private.
 
 To run the Django checks with Python 3.12, create a virtual environment, install `requirements.txt`, and run `python manage.py test`.
