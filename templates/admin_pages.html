@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Manage Pages · Local Pages{% endblock %}
+{% block content %}
+<nav><a href="/">Directory</a></nav>
+<header><h1>Manage Pages</h1><a class="primary" href="{% url 'add_page' %}">Add Page</a></header>
+{% if error %}<p role="alert">{{ error }}</p>{% endif %}
+{% for page, url in pages %}
+<section class="panel">
+  <h2>{{ page.title }}</h2>
+  <p><a href="{{ url }}">{{ url }}</a></p>
+  <p>Published <code>{{ page.revision|slice:":8" }}</code> from {{ page.branch }}</p>
+  <form method="post" action="{% url 'refresh_page' page.slug %}">
+    {% csrf_token %}
+    <button>Publish now</button>
+  </form>
+</section>
+{% empty %}<p>Pages you publish will appear here.</p>{% endfor %}
+{% endblock %}

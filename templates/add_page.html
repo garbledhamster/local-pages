@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Add Page · Local Pages{% endblock %}
+{% block content %}
+<nav><a href="{% url 'admin_home' %}">Manage Pages</a></nav>
+<h1>Add Page</h1>
+{% if error %}<p role="alert">{{ error }}</p>{% endif %}
+<form method="post">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+  <fieldset>
+    <legend>Repository</legend>
+    {{ form.provider.as_field_group }}
+    {{ form.repository.as_field_group }}
+    {{ form.username.as_field_group }}
+    {{ form.token.as_field_group }}
+    <button name="action" value="branches" formnovalidate>Check branches</button>
+    {% if branches %}
+    <p role="status">Available branches</p>
+    <ul class="branch-list">{% for branch in branches %}<li><code>{{ branch }}</code></li>{% endfor %}</ul>
+    <p>Enter a branch below. Re-enter your token for a private repository.</p>
+    {% endif %}
+  </fieldset>
+  <fieldset>
+    <legend>Page</legend>
+    {{ form.title.as_field_group }}
+    {{ form.branch.as_field_group }}
+    {{ form.folder.as_field_group }}
+    {{ form.entry.as_field_group }}
+    {{ form.slug.as_field_group }}
+    <p>Leave the subdomain blank to use the Page name under <code>{{ base_host }}</code>.</p>
+  </fieldset>
+  <button name="action" value="publish">Publish Page</button>
+</form>
+{% endblock %}

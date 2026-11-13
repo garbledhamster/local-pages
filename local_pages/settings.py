@@ -7,13 +7,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_HOST = os.environ.get("LOCAL_PAGES_HOST", "pages.localhost")
 PAGE_HOST = f"welcome.{BASE_HOST}"
 SECRET_KEY = os.environ.get("LOCAL_PAGES_SECRET_KEY") or get_random_secret_key()
-ALLOWED_HOSTS = [BASE_HOST, PAGE_HOST]
+ALLOWED_HOSTS = [f".{BASE_HOST}"]
+PUBLISH_ROOT = Path(os.environ.get("LOCAL_PAGES_PUBLISH_ROOT", BASE_DIR / "data" / "sites"))
+ALLOW_FILE_REPOSITORIES = False
+INSECURE_GIT_HOSTS = os.environ.get("LOCAL_PAGES_INSECURE_GIT_HOSTS", "").split()
+if os.environ.get("LOCAL_PAGES_HTTPS") == "1":
+    SESSION_COOKIE_NAME = "__Host-localpages"
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_NAME = "__Host-localpages-csrf"
+    CSRF_COOKIE_SECURE = True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 ROOT_URLCONF = "local_pages.urls"
 WSGI_APPLICATION = "local_pages.wsgi.application"
 INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
+    "local_pages",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

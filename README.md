@@ -6,7 +6,7 @@ The project is in Chapter 3, Engine & Assets.
 
 ## Try the first runnable example
 
-The example opens a sample HTML Page from a signed-in directory. Use a local Docker Compose installation and a browser that resolves `.localhost` names to your computer.
+The example opens a sample HTML Page from a signed-in directory and lets an operator publish a Page from Git. Use a local Docker Compose installation and a browser that resolves `.localhost` names to your computer.
 
 ```sh
 python3 -c 'import secrets; print("LOCAL_PAGES_SECRET_KEY=" + secrets.token_hex(32))' > .env
@@ -17,6 +17,10 @@ docker compose up
 ```
 
 Open [the directory](http://pages.localhost:8000/) and sign in with the account you created. Open **Welcome** and sign in on that hostname to view the sample Page. Use this setup on loopback for development. The Blackbox pilot uses HTTPS.
+
+To publish a Page, open **Manage Pages → Add Page**. Paste the Git clone URL and enter a Git username and read-only token for a private repository. Check the available branches, then choose the branch, publish folder, and entry file. Enter `.` for the branch root. Use `index.html` or a Markdown file such as `README.md` as the entry. Use **Publish now** to refresh a published Page.
+
+Keep `LOCAL_PAGES_SECRET_KEY` with your database backup. Local Pages uses it to encrypt saved Git credentials. Use HTTPS for repository URLs. To allow a trusted internal Git server over HTTP, set `LOCAL_PAGES_INSECURE_GIT_HOSTS` to its hostname or IP address. Use `LOCAL_PAGES_HTTPS=1` behind a trusted HTTPS reverse proxy that sets `X-Forwarded-Proto` and keeps the app port private.
 
 To run the Django checks with Python 3.12, create a virtual environment, install `requirements.txt`, and run `python manage.py test`.
 

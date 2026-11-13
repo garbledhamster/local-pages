@@ -3,6 +3,9 @@ services:
     build: .
     environment:
       LOCAL_PAGES_HOST: "${LOCAL_PAGES_HOST:-pages.localhost}"
+      LOCAL_PAGES_PUBLISH_ROOT: /data/sites
+      LOCAL_PAGES_HTTPS: "${LOCAL_PAGES_HTTPS:-0}"
+      LOCAL_PAGES_INSECURE_GIT_HOSTS: "${LOCAL_PAGES_INSECURE_GIT_HOSTS:-}"
       LOCAL_PAGES_DATABASE: /data/local-pages.sqlite3
       LOCAL_PAGES_SECRET_KEY: "${LOCAL_PAGES_SECRET_KEY:?Set LOCAL_PAGES_SECRET_KEY in .env}"
     ports:

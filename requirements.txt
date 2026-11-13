@@ -1,2 +1,4 @@
 Django>=5.2,<5.3
 gunicorn>=23,<24
+cryptography>=45
+markdown-it-py>=4,<5

@@ -7,7 +7,12 @@
     <button>Sign out</button>
   </form>
 </header>
+{% if request.user.is_staff %}<nav><a href="{% url 'admin_home' %}">Manage Pages</a></nav>{% endif %}
 <ul aria-label="Published Pages">
+  {% for title, url in pages %}
+  <li><a href="{{ url }}">{{ title }} <span aria-hidden="true">↗</span></a></li>
+  {% empty %}
   <li><a href="{{ page_url }}">Welcome <span aria-hidden="true">↗</span></a></li>
+  {% endfor %}
 </ul>
 {% endblock %}

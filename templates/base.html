@@ -18,6 +18,17 @@
     h1 { font-size: clamp(2.4rem, 8vw, 4rem); margin: 0 0 1.75rem; line-height: 1.05; letter-spacing: -.06em; }
     a { color: var(--accent); text-underline-offset: .25em; }
     a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+    nav { margin-bottom: 1rem; }
+    nav + ul { margin-top: 1.5rem; }
+    .primary { padding: .65rem 1rem; background: var(--accent); color: #fff; border-radius: .25rem; text-decoration: none; }
+    .panel, fieldset { background: #fff; border: 1px solid var(--line); margin: 0 0 1.25rem; padding: 1.25rem; overflow-wrap: anywhere; }
+    .panel h2 { margin: 0; }
+    fieldset { min-width: 0; display: grid; gap: .65rem; }
+    legend { font-weight: 650; padding: 0 .5rem; }
+    select { padding: .55rem; font: inherit; }
+    .branch-list { margin: 0; }
+    .branch-list li { border: 0; }
+    article img { max-width: 100%; height: auto; }
     label { display: block; font-weight: 600; }
     input { box-sizing: border-box; width: 100%; max-width: 24rem; padding: .65rem; border: 1px solid #718b80; border-radius: .25rem; font: inherit; }
     button { padding: .65rem 1rem; border: 0; border-radius: .25rem; color: #fff; background: var(--accent); font: inherit; cursor: pointer; }
