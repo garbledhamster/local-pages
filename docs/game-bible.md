@@ -3,7 +3,7 @@
 Local Pages
 
 - Current stage: Chapter 1, Vision & Scope.
-- Next decisions: Define the agent handoff, GitLab host coverage, and the first publishing workflow.
+- Next decisions: Confirm the Page address, refresh behavior, and first-release verification.
 
 ## Vision & Scope
 
@@ -25,19 +25,24 @@ Sign in to the admin, pick a Git provider, repository, branch, and source, then 
 
 Joe is the first operator. The first release should make his publishing workflow simple and give other self-hosters a setup they can repeat. Linux with Docker Compose is the supported installation target. Readers sign in to open the directory and published Pages.
 
+### Product and interface direction
+
+Keep the service straightforward to install, use, and maintain. Add components when the publishing workflow needs them. Give the directory and admin each a clear purpose. Use spacing, borders, and text hierarchy to show where to go, what is live, and what needs attention. Check both views at the screen sizes operators and readers will use.
+
 ### First milestone and release scope
 
-Start by proving the Gitea workflow on the first deployment. The proposed check is to add a Page from a private repository in the admin, open it from the directory, then push a change and see it at the same URL. The first shareable release includes Gitea, GitHub, and GitLab. Verify publishing from all three before calling that release ready.
+Use Island Post to prove the first installation. In the admin, publish its Project Bible reader and an already-built playable browser preview. Open both from the directory, push an update, and check that the same addresses serve the new versions. This check covers publishing prebuilt files.
 
-Ship a plugin, an MCP integration, and repo-level agent instructions. An operator should be able to point an agent at this repository and have it get the service running and hand over the web admin for setup. The instructions should also explain how to manage the service after installation. The first plugin host and the management actions agents can perform are open.
+The first shareable release supports Gitea, GitHub, GitLab.com, and self-managed GitLab. Prove the Gitea workflow on the first deployment, then verify the remaining connections before release.
+
+Ship a Codex plugin, MCP setup, and repo-level agent instructions. An agent can install, update, check status, and diagnose the service, then hand over the admin URL. The operator connects repositories and creates, publishes, and disables Pages in the web admin.
 
 ### Open decisions
 
-- Which agent host should the first plugin target?
-- Where should agents hand off to the operator during setup and ongoing management?
-- Does first-release GitLab support cover GitLab.com, self-managed GitLab, or both?
-- Which source formats and address choices does the first publishing check need to prove?
-- What proves the first shareable release is ready for another operator to try?
+- What address should a new Page get, and when can the operator choose another?
+- How soon should a push show up on a Page?
+- What does another operator need to prove before the first shareable release?
+- How should the admin present source choices and publishing status? Carry this into the Design Document.
 
 ## Design Document
 - Core workflow and intended experience:
