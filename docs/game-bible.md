@@ -2,10 +2,12 @@
 
 Local Pages
 
-- Current stage: Chapter 1, Vision & Scope.
-- Next check: Review Chapter 1 scope before starting the Design Document.
+- Current stage: Chapter 2, Design Document.
+- Next decisions: How operators connect repositories, choose what to publish, and give readers access.
 
 ## Vision & Scope
+
+Scope confirmed on November 13, 2026.
 
 ### Project folder and Git
 
@@ -55,10 +57,32 @@ Local Pages checks the selected branches every few minutes across all supported 
 Work through how operators connect a provider, choose an HTML or Markdown entry or build folder, and see the result of a publish. Use the Island Post reader and browser preview to check that the flow makes sense for both sources.
 
 ## Design Document
-- Core workflow and intended experience:
-- For each rule or interaction: input, rule, feedback, success, failure, and recovery:
-- Screens or scenes and their dependencies:
-- Open design decisions:
+
+### Core workflow
+
+The operator opens the admin URL from the installation handoff and signs in. They add a Page, choose a provider, repository, branch, and source, then review the suggested subdomain. The Bible reader and playable preview can each have a Page from the same repository. The operator publishes each Page and opens its address to check the result. A signed-in reader opens the directory and follows the link to the published site.
+
+### Screens
+
+- **Directory.** Show published Pages by name with a link to each site. Keep the focus on finding and opening a Page.
+- **Admin.** Show the Page name, live address, and publish status. Give the operator a place to add a Page, edit its settings, publish now, and disable it.
+- **Page setup.** Bring the source, editable subdomain, and publish action together. Show where the Page will open before the operator publishes.
+
+### Proposed behavior to verify
+
+| Situation | What the operator or reader sees |
+| --- | --- |
+| First publish succeeds | The Page has a working link in the admin and appears in the directory. |
+| The service finds a new commit on the selected branch | The same address serves the new version after publishing succeeds. **Publish now** checks immediately. |
+| An update fails after the Page has gone live | The previous version stays available. The admin shows what failed and lets the operator retry. |
+| The operator disables a Page | The directory stops listing it and the site address stops serving its content. |
+| A signed-out reader opens the directory or a Page directly | The reader must sign in before viewing the content. |
+
+### Open design decisions
+
+- Compare entering a repository URL with browsing a provider's repositories after connecting an account.
+- Decide how the source specifies the files to publish and the page that opens at the root. Test the choice against both Island Post sites, including the Bible's linked assets.
+- Decide how the operator grants reader access. Check sign-in from the directory and from a direct Page link.
 
 ## Engine and Assets
 - Engine and launch instructions:
