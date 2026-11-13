@@ -65,6 +65,7 @@ class AdminPublishingTest(TestCase):
             entry = repo / "site" / "reader" / "index.html"
             entry.write_text("<h1>Published from Git</h1>")
             (entry.parent / "app.js").write_text("console.log('ready')")
+            (repo / "site" / "notes.md").write_text("# Raw notes")
             (repo / "private.txt").write_text("outside publish folder")
             git("add", ".")
             git("commit", "-m", "Add test site")
@@ -86,6 +87,9 @@ class AdminPublishingTest(TestCase):
                                      fetch_redirect_response=False)
                 self.assertContains(self.client.get("/reader/index.html", HTTP_HOST=host), "Published from Git")
                 self.assertContains(self.client.get("/reader/app.js", HTTP_HOST=host), "ready")
+                raw = self.client.get("/notes.md", HTTP_HOST=host)
+                self.assertEqual(raw["Content-Type"], "text/plain; charset=utf-8")
+                self.assertContains(raw, "# Raw notes")
                 self.assertEqual(self.client.get("/private.txt", HTTP_HOST=host).status_code, 404)
 
                 entry.unlink()

@@ -54,10 +54,10 @@ def home(request, path=""):
     if not path and "/" in page.entry:
         query = request.META.get("QUERY_STRING", "")
         return private(redirect("/" + quote(page.entry) + ("?" + query if query else "")))
-    return serve_file(request, root, path or page.entry)
+    return serve_file(request, root, path or page.entry, render_markdown=not path)
 
 
-def serve_file(request, root, path):
+def serve_file(request, root, path, *, render_markdown=False):
     target = (root / path).resolve()
     if not target.is_relative_to(root.resolve()):
         raise Http404
@@ -67,12 +67,16 @@ def serve_file(request, root, path):
         target /= "index.html"
     if not target.is_file():
         raise Http404
-    if target.suffix.lower() == ".md":
+    if render_markdown and target.suffix.lower() == ".md":
         content = MarkdownIt().disable("html_block").disable("html_inline").render(
             target.read_text(encoding="utf-8", errors="replace")
         )
         return private(render(request, "markdown.html", {"title": target.stem, "content": content}))
-    content_type = mimetypes.guess_type(target.name)[0] or "application/octet-stream"
+    content_type = {
+        ".js": "text/javascript",
+        ".mjs": "text/javascript",
+        ".md": "text/plain; charset=utf-8",
+    }.get(target.suffix.lower()) or mimetypes.guess_type(target.name)[0] or "application/octet-stream"
     try:
         file = target.open("rb")
     except FileNotFoundError as exc:
