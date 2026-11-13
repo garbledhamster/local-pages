@@ -3,7 +3,7 @@
 Local Pages
 
 - Current stage: Chapter 1, Vision & Scope.
-- Next decisions: Confirm the Page address, refresh behavior, and first-release verification.
+- Next check: Review Chapter 1 scope before starting the Design Document.
 
 ## Vision & Scope
 
@@ -37,12 +37,22 @@ The first shareable release supports Gitea, GitHub, GitLab.com, and self-managed
 
 Ship a Codex plugin, MCP setup, and repo-level agent instructions. An agent can install, update, check status, and diagnose the service, then hand over the admin URL. The operator connects repositories and creates, publishes, and disables Pages in the web admin.
 
-### Open decisions
+### Page addresses and updates
 
-- What address should a new Page get, and when can the operator choose another?
-- How soon should a push show up on a Page?
-- What does another operator need to prove before the first shareable release?
-- How should the admin present source choices and publishing status? Carry this into the Design Document.
+The directory lives at the configured base hostname. When you add a Page, the admin suggests a subdomain you can edit before publishing, such as `island-post.pages.example.com`. The operator sets up the directory hostname and a wildcard DNS entry for the project sites. See [the address decision](adr/0001-use-a-subdomain-for-each-page.md).
+
+Local Pages checks the selected branches every few minutes across all supported providers. Use **Publish now** in the admin to request a refresh without waiting for the next check.
+
+### How we’ll verify the release
+
+- Start with a fresh Linux host and install with Docker Compose using the public repo instructions.
+- Verify that an agent using the Codex plugin and MCP setup can get the service running and hand over the admin URL.
+- Sign in, connect private repositories, and publish one Page from Gitea, GitHub, GitLab.com, and self-managed GitLab. Open each Page from the directory. Verify that signed-out visitors cannot open the directory or published Pages.
+- On the Island Post pilot, open the Bible and play the browser preview. Push an update and verify that both existing addresses serve the expected versions after refresh. Check **Publish now** as well.
+
+### Decisions for the Design Document
+
+Work through how operators connect a provider, choose an HTML or Markdown entry or build folder, and see the result of a publish. Use the Island Post reader and browser preview to check that the flow makes sense for both sources.
 
 ## Design Document
 - Core workflow and intended experience:
