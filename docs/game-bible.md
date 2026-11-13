@@ -3,7 +3,7 @@
 Local Pages
 
 - Current stage: Chapter 2, Design Document.
-- Next decisions: How operators connect repositories, choose what to publish, and give readers access.
+- Next decisions: How repositories provide publishable files and which Pages a reader account can open.
 
 ## Vision & Scope
 
@@ -60,13 +60,20 @@ Work through how operators connect a provider, choose an HTML or Markdown entry 
 
 ### Core workflow
 
-The operator opens the admin URL from the installation handoff and signs in. They add a Page, choose a provider, repository, branch, and source, then review the suggested subdomain. The Bible reader and playable preview can each have a Page from the same repository. The operator publishes each Page and opens its address to check the result. A signed-in reader opens the directory and follows the link to the published site.
+The operator opens the admin URL from the installation handoff, signs in, and chooses **Add Page**.
+
+1. Choose Gitea, GitHub, or GitLab, paste the repository URL, and provide a read-only credential. The admin checks access and loads the branches. If the connection fails, explain what to check and let the operator retry.
+2. Select a branch and a publish folder. Choose the entry file inside that folder. Suggest `index.html` for an HTML site or `README.md` for Markdown. The operator can choose a nested entry, such as `docs/reader/index.html`, while keeping the files it links to inside the publish folder.
+3. Review the suggested subdomain and publish. The Bible reader and playable preview can each have a Page sourced from the same repository. Open each address to check the result.
+
+A reader signs in with an individual account. They can find a Page in the directory or open its address directly. The operator creates reader accounts and removes access from the admin.
 
 ### Screens
 
 - **Directory.** Show published Pages by name with a link to each site. Keep the focus on finding and opening a Page.
 - **Admin.** Show the Page name, live address, and publish status. Give the operator a place to add a Page, edit its settings, publish now, and disable it.
 - **Page setup.** Bring the source, editable subdomain, and publish action together. Show where the Page will open before the operator publishes.
+- **Readers.** Let the operator create individual reader accounts and remove access.
 
 ### Proposed behavior to verify
 
@@ -80,9 +87,8 @@ The operator opens the admin URL from the installation handoff and signs in. The
 
 ### Open design decisions
 
-- Compare entering a repository URL with browsing a provider's repositories after connecting an account.
-- Decide how the source specifies the files to publish and the page that opens at the root. Test the choice against both Island Post sites, including the Bible's linked assets.
-- Decide how the operator grants reader access. Check sign-in from the directory and from a direct Page link.
+- Decide who assembles the publish folder when a site needs generated files or a Git submodule. Island Post uses a pinned shared guide for reader scripts and styles, while its browser preview comes from a build. Verify that the reader opens at the Page address and its linked files load.
+- Decide whether a reader account opens all published Pages or only Pages the operator selects. Verify access through both the directory and direct links, including after account access is removed.
 
 ## Engine and Assets
 - Engine and launch instructions:
