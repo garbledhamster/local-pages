@@ -2,8 +2,8 @@
 
 Local Pages
 
-- Current stage: Chapter 2, Design Document.
-- Next check: Review the Chapter 2 publishing workflow before moving into Engine & Assets.
+- Current stage: Chapter 3, Engine & Assets.
+- Next decisions: Confirm the application stack and HTTPS setup for the Island Post pilot.
 
 ## Vision & Scope
 
@@ -58,6 +58,8 @@ Work through how operators connect a provider, choose an HTML or Markdown entry 
 
 ## Design Document
 
+Workflow confirmed on November 13, 2026.
+
 ### Core workflow
 
 The operator opens the admin URL from the installation handoff, signs in, and chooses **Add Page**.
@@ -96,10 +98,25 @@ Each project commits its finished files to a branch or folder. Local Pages serve
 - Push updated files for both Pages and check that the same addresses serve the new versions. Try **Publish now**, then try an update with a missing entry file and check that the previous version stays available and the admin shows the failure.
 - Create a reader account, sign in, and open both Pages. Remove the account and check that the directory and direct Page links require access again, including in the same browser session.
 
-## Engine and Assets
-- Engine and launch instructions:
-- Maps, characters, objects, interface, art, and sound:
-- Asset locations and readiness:
+## Engine & Assets
+
+### Application stack under review
+
+The proposed stack is Django 5.2 LTS, SQLite, server-rendered HTML, and Docker Compose. Django supplies user accounts, sessions, and permissions. Local Pages would use its own directory and publishing screens. Keep the database and published snapshots on persistent storage. One application would handle publishing and account access for the first release. See [Django authentication](https://docs.djangoproject.com/en/5.2/topics/auth/) and [Django's SQLite notes](https://docs.djangoproject.com/en/5.2/ref/databases/#sqlite-notes).
+
+### HTTPS on the pilot host
+
+The directory hostname and wildcard Page hostnames need HTTPS. The proposed pilot setup is Caddy with a browser-trusted certificate issued through DNS validation. The network's DNS resolver points both hostnames to the private server. Other operators can bring an HTTPS reverse proxy they already run. See [Caddy's DNS challenge documentation](https://caddyserver.com/docs/automatic-https#dns-challenge).
+
+### What the first running example needs
+
+- **Directory.** A simple list of published Pages with clear names and links. Check the layout on desktop and phone.
+- **Admin and Page setup.** A list of Pages with their live addresses and publish status, plus a form for the repository, branch, publish folder, entry file, and subdomain. Give a failed publish enough room to show what happened and how to retry.
+- **Pilot content.** Use the Island Post reader, including the shared guide files and linked assets, and a prebuilt playable preview. Verify that both run at their own subdomains.
+
+### Clean checkout check
+
+Document how to launch the first running example with Docker Compose once the stack is chosen. From a clean checkout, open the admin, sign in, publish a small HTML Page, and open it from the directory. Use that check to verify that the service, accounts, templates, and HTTPS work together before trying the full Island Post pilot.
 
 ## Development Sandbox
 - Dedicated development scene to build before player-scene assembly:
