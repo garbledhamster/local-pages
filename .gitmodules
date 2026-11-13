@@ -1,0 +1,4 @@
+[submodule "docs/bible-upstream"]
+	path = docs/bible-upstream
+	url = https://github.com/garbledhamster/bible.ourstuff.space.git
+	branch = main
